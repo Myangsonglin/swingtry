@@ -1,0 +1,712 @@
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JSlider;
+import javax.swing.JList;
+import javax.swing.JTabbedPane;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JMenu;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JColorChooser;
+import javax.swing.JLabel;
+import javax.swing.JSeparator;
+import javax.swing.JTextArea;
+import javax.swing.JToolBar;
+import javax.swing.JToolBar.Separator;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import javax.swing.JOptionPane;
+import javax.swing.JDialog;
+
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+
+import javax.swing.UnsupportedLookAndFeelException;
+
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.metal.MetalLabelUI;
+import javax.swing.plaf.basic.BasicLookAndFeel;
+import javax.swing.plaf.multi.MultiLookAndFeel;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.synth.SynthLabelUI;
+import javax.swing.plaf.multi.MultiLabelUI;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+import javax.swing.plaf.synth.SynthLookAndFeel;
+
+import java.awt.event.WindowEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import java.awt.AWTEvent;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Insets;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.DisplayMode;
+import java.awt.Desktop;
+import java.awt.MouseInfo;
+import java.awt.PointerInfo;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.CardLayout;
+//import java.awt.BoxLayout;
+
+//import java.awt.image.BufferedImage;
+
+//import java.util.ArrayList;
+
+import java.net.URL;
+import java.net.URI;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+//import java.net.URI;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.Reader;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import java.nio.charset.Charset;
+
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
+
+//import java.util.SortedMap;
+//import java.util.Collection;
+import java.util.Set;
+import java.util.ArrayList;
+
+//import javax.imageio.ImageIO;
+
+/**
+ * Sample application using the simple text editor component that
+ * supports only one font.
+ *
+ * @author  bob young
+ */
+
+public class MyFirstUI extends JFrame {
+
+		//private BufferedImage bimg1 = new BufferedImage();
+		//private BufferedImage bimg2 = new BufferedImage();
+		//private ArrayList<BufferedImage> arrListbimg = new ArrayList<BufferedImage>();
+
+		//private URL imagesrc1 = new URL();
+		//private URL imagesrc2 = new URL();
+		//imagesrc1 = (new File("ship.png").toURI()).toURL();
+		//imagesrc2 = (new File("background.png").toURI()).toURL();
+		//bimg1 = ImageIO.read(imagesrc1);
+		//bimg2 = ImageIO.read(imagesrc2);
+		//arrListbimg.add(bimg1);
+		//arrListbimg.add(bimg2);
+
+
+		/* The DisplayMode class encapsulates the bit depth, height, width, and refresh rate of
+		 *  a GraphicsDevice.
+		 */
+		private DisplayMode dm = new DisplayMode(1366, 768, DisplayMode.BIT_DEPTH_MULTI, 60);
+
+		private static Desktop desktop;
+
+		/* Constructor of myFirstUI.
+		   the glassPane sits over the top of everything, where it is in a position to intercept mouse movements.
+		   Although the menuBar component is optional, the layeredPane, contentPane, and glassPane always exist. */
+		public MyFirstUI(String str) {
+			super(str);
+			//setContentPane(panel);
+			setSize(new Dimension(dm.getWidth(), dm.getHeight()));
+			//pack();
+			setVisible(true);
+
+			setBackground(Color.green);
+			//setIconImage(arrListbimg);
+			enableEvents(AWTEvent.WINDOW_EVENT_MASK);
+			//enableEvents(MouseEvent.MOUSE_CLICKED);
+		}
+
+		@Override
+		public void addImpl(Component comp, Object constraints, int index) {
+			super.addImpl(comp, constraints, index);
+		}
+
+		public static void main(String[] args) {
+			try {
+
+			final MyFirstUI myFirstUI = new MyFirstUI(args[0]);
+			BorderLayout borderlayout = new BorderLayout();
+			final JTabbedPane panel = new JTabbedPane();
+			final JTextArea txtarea = new JTextArea();
+			//final Color selectedcolor;
+
+			final JScrollPane areasp = new JScrollPane(txtarea);
+			JTable jtable = new JTable(160, 160);
+			JScrollPane tablescrollpane = new JScrollPane(jtable);
+			MyJToolBar mytoolbar = new MyJToolBar();
+			JToolBar.Separator toolbarseparator = new JToolBar.Separator(new Dimension(10, 100));
+
+
+			MetalLabelUI individuality = new MetalLabelUI();
+			SynthLabelUI character = new SynthLabelUI();
+			MultiLabelUI selfdom = new MultiLabelUI();
+
+			// Create the specified status-label within a icon, a seperator and the system current time
+			String text = Calendar.getInstance(TimeZone.getTimeZone("GMT"), Locale.US).getTime().toString();
+			JLabel statuslab = new JLabel(text, new ImageIcon("ship.png"), 2);
+			statuslab.setIconTextGap(1000);
+			//statuslab.setVerticalAlignment(10);
+			//statuslab.setUI(selfdom);
+			//System.out.println(statuslab.paramString());
+
+			//SwingConstants sw = new SwingConstants();
+			JSeparator separator = new JSeparator(SwingConstants.VERTICAL);
+			FlowLayout flowlayout = new FlowLayout(50, 30, 30);
+			flowlayout.addLayoutComponent("time label", statuslab);
+			flowlayout.addLayoutComponent("seperator", separator); 
+
+			areasp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+			areasp.setPreferredSize(new Dimension(250, 250));
+			areasp.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder("Plain Text"), BorderFactory.createEmptyBorder(5, 5, 5, 5)), areasp.getBorder()));
+
+			JMenuBar menuBar;
+			JMenu menu;
+			JMenuItem menuItem;
+
+			menuBar = new JMenuBar();
+			menu = new JMenu("File");
+			menu.setMnemonic(KeyEvent.VK_F);
+			menuBar.add(menu);
+
+			menuItem = new JMenuItem("New Tab", KeyEvent.VK_T);
+			menuItem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e11) {
+					for(int x=0; x<100; x++) {
+						panel.add("Unsaved Document " + x, areasp);
+					}
+				}
+			});
+			menu.add(menuItem);
+			menuItem = new JMenuItem("New Window", KeyEvent.VK_N);
+			menu.add(menuItem);
+			menuItem = new JMenuItem("New Private Window", KeyEvent.VK_P);
+			menu.add(menuItem);
+			menu.addSeparator();
+
+			menuItem = new JMenuItem("Open File", KeyEvent.VK_O);
+			menuItem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e1) {
+					JFileChooser filechooser = new JFileChooser();
+
+					FileNameExtensionFilter jpgfilter = new FileNameExtensionFilter("JPG Images", "jpg");
+					FileNameExtensionFilter txtfilter = new FileNameExtensionFilter("Text Files", "txt");
+					FileNameExtensionFilter odtfilter = new FileNameExtensionFilter("ODT documents", "odt");
+
+					File dir = new File("/home/javatar/development");
+
+					filechooser.addChoosableFileFilter(jpgfilter);
+					filechooser.addChoosableFileFilter(txtfilter);
+					filechooser.addChoosableFileFilter(odtfilter);
+					//filechooser.setControlButtonsAreShown(true);
+					filechooser.setCurrentDirectory(dir);
+					filechooser.setDialogTitle("Open File");
+					filechooser.setDragEnabled(true);
+					filechooser.showOpenDialog(panel);
+					File selectedfile = filechooser.getSelectedFile();
+
+
+					try {
+						InputStreamReader r = new InputStreamReader(new FileInputStream(selectedfile), "UTF-8");
+
+						FileOutputStream fop;
+						char[] c = new char[(int)selectedfile.length()];
+						Font txtfont = new Font(Font.DIALOG_INPUT, Font.BOLD, 16);
+						r.read(c);
+						String str = new String(c);
+						r.close();
+						txtarea.setText(str);
+						txtarea.setFont(txtfont);
+						txtarea.setEditable(false);
+						//txtarea.setLineWrap(true);
+						//txtarea.setWrapStyleWord(true);
+						//txtarea.setRows(1000);
+						//System.out.println(txtarea.getFont().toString());
+						System.out.println(Charset.defaultCharset().toString());
+						Object[] obj = Charset.availableCharsets().values().toArray();
+
+						StringBuffer strb = new StringBuffer();
+						//ArrayList<String> arrlist = new ArrayList<String>();
+						for(int i=0; i<obj.length-1; i++) {
+							strb.append(obj[i].getClass().getName());
+						}
+
+						File directory = new File("/home/javatar/Documents/javacode/part05/chapter02/experiment/");
+						File charsetxt = File.createTempFile("javacharset", ".txt", directory);
+						Charset charset = Charset.forName("UTF-8");
+						fop = new FileOutputStream(new File(directory.getName() + charsetxt.getName()));
+						byte[] contentInBytes = strb.toString().getBytes(charset);
+						fop.write(contentInBytes);
+						fop.flush();
+						fop.close();
+						System.out.println(new File(directory.getName()+charsetxt.getName()).exists());
+
+						String[] filearr = directory.list();
+						for(int j=0; j<filearr.length-1; j++) {
+							System.out.println(filearr[j]);
+						}
+
+
+					} catch(FileNotFoundException e) { e.printStackTrace();
+					} catch(IOException e) { e.printStackTrace();}
+				}
+				
+			});
+			menu.add(menuItem);
+			menuItem = new JMenuItem("Save Page as", KeyEvent.VK_S);
+			menuItem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e2) {
+					JFileChooser filechooser = new JFileChooser();
+					filechooser.showSaveDialog(panel);
+				}
+			});
+			menu.add(menuItem);
+			menuItem = new JMenuItem("Email link", KeyEvent.VK_E);
+			menu.add(menuItem);
+			menu.addSeparator();
+
+			menuItem = new JMenuItem("Print preview");
+			menu.add(menuItem);
+			menuItem  = new JMenuItem("Print", KeyEvent.VK_P);
+			menu.add(menuItem);
+			menu.addSeparator();
+
+			menuItem = new JMenuItem("Work offline", new ImageIcon("favicon-ok.ico"));
+			menu.add(menuItem);
+			menuItem = new JMenuItem("Quit", KeyEvent.VK_Q);
+			menuItem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					System.exit(100);
+				}
+			});
+			menu.add(menuItem);
+
+
+			menu = new JMenu("Edit");
+			menu.setMnemonic(KeyEvent.VK_D);
+			menuBar.add(menu);
+
+			menuItem = new JMenuItem("Undo", KeyEvent.VK_Z);
+			menuItem.setEnabled(false);
+			menu.add(menuItem);
+
+			menuItem = new JMenuItem("Redo", KeyEvent.VK_Y);
+			menuItem.setEnabled(false);
+			menu.add(menuItem);
+			menu.addSeparator();
+
+			menuItem = new JMenuItem("Cut", KeyEvent.VK_X);
+			menuItem.setEnabled(false);
+			menu.add(menuItem);
+
+			menuItem = new JMenuItem("Copy", KeyEvent.VK_C);
+			menuItem.setEnabled(false);
+			menu.add(menuItem);
+
+			menuItem = new JMenuItem("Paste", KeyEvent.VK_V);
+			menuItem.setEnabled(false);
+			menu.add(menuItem);
+
+			menuItem = new JMenuItem("Delete");
+			menuItem.setEnabled(false);
+			menu.add(menuItem);
+			menu.addSeparator();
+
+			menuItem = new JMenuItem("Select All", KeyEvent.VK_A);
+			menuItem.addActionListener(new ActionListener () {
+				public void actionPerformed(ActionEvent e7) {
+					txtarea.selectAll();
+				}
+			});
+			menu.add(menuItem);
+			menu.addSeparator();
+
+			menuItem = new JMenuItem("Insert Date and Time");
+			menu.add(menuItem);
+			menu.addSeparator();
+
+			menuItem = new JMenuItem("Preferrences");
+			menuItem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e4) {
+					JFrame preframe = new JFrame();
+					JPanel bpanel = new JPanel(new FlowLayout());
+					JTabbedPane tabbedPane = new JTabbedPane();
+
+					JPanel viewPanel = new JPanel();
+					BoxLayout boxlayout = new BoxLayout(viewPanel, BoxLayout.Y_AXIS);
+					viewPanel.setLayout(boxlayout);
+					JCheckBox lineNum = new JCheckBox("Display line numbers");
+					JCheckBox rightMarginCol = new JCheckBox("Display right margin at column:");
+					JSlider slider = new JSlider(1, 1280, 80);
+					JLabel textWrapping = new JLabel("Text Wrapping");
+					JCheckBox enableTextW = new JCheckBox("Enable Text Wrapping", true);
+					JCheckBox donotSplitW = new JCheckBox("Do not split words over two lines", true);
+					JLabel highlightL = new JLabel("Highlighting");
+					JCheckBox highlightCL = new JCheckBox("Highlight current line");
+					JCheckBox highlightMB = new JCheckBox("Highlight matching brackets");
+					viewPanel.add(lineNum);
+					viewPanel.add(rightMarginCol);
+					viewPanel.add(textWrapping);
+					viewPanel.add(enableTextW);
+					viewPanel.add(donotSplitW);
+					viewPanel.add(highlightL);
+					viewPanel.add(highlightCL);
+					viewPanel.add(highlightMB);
+
+
+					JPanel editorPanel = new JPanel();
+					BoxLayout editorLayout = new BoxLayout(editorPanel, BoxLayout.Y_AXIS);
+					editorPanel.setLayout(editorLayout);
+					JPanel tabStopsPanel = new JPanel();
+					BoxLayout tabStopsBoxLayout = new BoxLayout(tabStopsPanel, BoxLayout.Y_AXIS);
+					tabStopsPanel.setLayout(tabStopsBoxLayout);
+					JLabel tabWidth = new JLabel("Tab Width: ");
+					JCheckBox insertSpace = new JCheckBox("Insert spaces instend of tabs");
+					JCheckBox automaticIndentation = new JCheckBox("Enable automatic indentation");
+					tabStopsPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder("Tab Stops"), BorderFactory.createEmptyBorder(5, 5, 5, 5)), tabStopsPanel.getBorder()));
+					tabStopsPanel.add(tabWidth);
+					tabStopsPanel.add(insertSpace);
+					tabStopsPanel.add(automaticIndentation);
+					JPanel fileSavingPanel = new JPanel();
+					BoxLayout fileSavingBoxLayout = new BoxLayout(fileSavingPanel, BoxLayout.Y_AXIS);
+					fileSavingPanel.setLayout(fileSavingBoxLayout);
+					JCheckBox createBackup = new JCheckBox("Create a backup copy when save files");
+					int seconds = 50;
+					JCheckBox autoSaveFiles = new JCheckBox("Auto save files per " + seconds + "seconds");
+					JSlider perSeconds = new JSlider(1, 120, 10);
+					fileSavingPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder("Tab Stops"), BorderFactory.createEmptyBorder(5, 5, 5, 5)), fileSavingPanel.getBorder()));
+					fileSavingPanel.add(createBackup);
+					fileSavingPanel.add(autoSaveFiles);
+					fileSavingPanel.add(perSeconds);
+					editorPanel.add(tabStopsPanel);
+					editorPanel.add(fileSavingPanel);
+
+
+					JPanel fontcolorPanel = new JPanel();
+					BoxLayout fontcolorP = new BoxLayout(fontcolorPanel, BoxLayout.Y_AXIS);
+					fontcolorPanel.setLayout(fontcolorP);
+					JPanel fontPanel = new JPanel();
+					//fontPanel.setComponentOrientation();
+					BoxLayout fontPLayout = new BoxLayout(fontPanel, BoxLayout.Y_AXIS);
+					fontPanel.setLayout(fontPLayout);
+					JCheckBox systemFixed = new JCheckBox("Use the system fixed width font");
+					JLabel editFont = new JLabel("editor font: ");
+					JComboBox selectFont = new JComboBox();
+					selectFont.setSize(new Dimension(150, 20));
+					fontPanel.add(systemFixed);
+					fontPanel.add(editFont);
+					fontPanel.add(selectFont);
+
+					JPanel colorschemePanel = new JPanel();
+					BoxLayout colorschemeLayout = new BoxLayout(colorschemePanel, BoxLayout.Y_AXIS);
+					colorschemePanel.setLayout(colorschemeLayout);
+					JLabel colorscheL = new JLabel("Color Scheme");
+					String[] data = { "Classic - classic color scheme", "Blue based color scheme", "Kate - color scheme used in kde Kate test editor", "Oblivion - Dark color scheme using Tango color palette", "Tango - color scheme using Tango color palette" };
+					JList<String> schemeDescript = new JList<String>(data);
+					JScrollPane schemeSP = new JScrollPane();
+					schemeSP.getViewport().setView(schemeDescript);
+					//schemeDescript.setDragEnabled(true);
+					schemeDescript.setFixedCellHeight(20);
+					JPanel buttPanel = new JPanel(new FlowLayout());
+					JButton addButt = new JButton("+");
+					addButt.setSize(new Dimension(8, 5));
+					JButton minusButt = new JButton("-");
+					minusButt.setSize(new Dimension(8, 5));
+					minusButt.setEnabled(false);
+					buttPanel.add(addButt);
+					buttPanel.add(minusButt);
+					colorschemePanel.add(colorscheL);
+					colorschemePanel.add(schemeDescript);
+					colorschemePanel.add(buttPanel);
+					fontcolorPanel.add(fontPanel);
+					fontcolorPanel.add(colorschemePanel);
+
+
+					JPanel pluginsPanel = new JPanel();
+					JCheckBox changeC = new JCheckBox("Change Case", new ImageIcon("images/new.gif"));
+					JCheckBox devhelpS = new JCheckBox("Devhelp support", new ImageIcon("images/copy.gif"));
+					JCheckBox docStatis = new JCheckBox("Devhelp support", new ImageIcon("images/copy.gif"), true);
+					JCheckBox externelT = new JCheckBox("Externel Tools", new ImageIcon("images/open.gif"));
+					JCheckBox fileBro = new JCheckBox("File Browser Panel", new ImageIcon("images/save.gif"), true);
+					JCheckBox insertD = new JCheckBox("Insert Date/Time", new ImageIcon("images/cut.gif"), true);
+					JCheckBox modelL = new JCheckBox("Modellines", new ImageIcon("images/favicon-ok.png"), true);
+					JCheckBox pythonC = new JCheckBox("Python console", new ImageIcon("images/favicon-cancel.png"));
+					JCheckBox[] pluginArr = { changeC, devhelpS, docStatis, externelT, fileBro, insertD, modelL, pythonC };
+					JList<JCheckBox> pluginsList = new JList<JCheckBox>(pluginArr);
+					JScrollPane listPane = new JScrollPane(pluginsList);
+					//listPane.getViewport().setView(pluginsList);
+					pluginsPanel.add(pluginsList);
+
+
+
+
+					JButton helpbutt = new JButton("Help", new ImageIcon("buttonicon/favicon-ok.png"));
+					helpbutt.setSize(new Dimension(40, 8));
+					JButton closebutt = new JButton("Close", new ImageIcon("buttonicon/favicon-cancel.png"));
+					closebutt.setSize(new Dimension(40, 8));
+					//preframe.setContentPane(tabbedPane);
+					//preframe.add(helpbutt, null, 0);
+					//preframe.add(closebutt, null, 0);
+					//preframe.add(helpbutt, borderlayout2.SOUTH);
+					//preframe.add(closebutt, borderlayout2.SOUTH);
+					bpanel.add(helpbutt);
+					bpanel.add(closebutt);
+					//flowlayout.addLayoutComponent("Help", helpbutt);
+					//flowlayout.addLayoutComponent("Close", closebutt);
+					tabbedPane.addTab("View", viewPanel);
+					tabbedPane.addTab("Editor", editorPanel);
+					tabbedPane.addTab("Font & Color", fontcolorPanel);
+					tabbedPane.addTab("Plugins", pluginsPanel);
+
+					BorderLayout borderlayout2 = new BorderLayout();
+					preframe.setLayout(borderlayout2);
+					preframe.add(tabbedPane, BorderLayout.CENTER);
+					preframe.add(bpanel, BorderLayout.SOUTH);
+					preframe.setTitle("MyFirstUIPreferrences");
+					preframe.setSize(900, 550);
+					preframe.setVisible(true);
+					
+				}
+			});
+			menu.add(menuItem); 
+
+
+			menu = new JMenu("Internet Explorer");
+			menuBar.add(menu);
+			menuItem = new JMenuItem("ie", KeyEvent.VK_I);
+			menuItem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e3) {
+					try {
+					URL google = new URL("http://www.baidu.com/");
+					BufferedReader in = new BufferedReader(new InputStreamReader(google.openStream(), "UTF-8"));
+
+					String inputLine;
+					String str = new String("a bird in the hand is worth than two in the bush");
+					//StringBuffer inputLineB = new StringBuffer();
+					while((inputLine = in.readLine()) != null) {
+						//inputLineB = new StringBuffer(inputLine);
+						//inputLine = inputLineB.substring(0, inputLineB.length()); 
+						txtarea.setText(inputLine);
+						Font font = new Font(Font.MONOSPACED, Font.ROMAN_BASELINE, 18);
+						Insets insets = new Insets(100, 100, 10, 10);
+
+						txtarea.setFont(font);
+						txtarea.replaceRange(str, 0, 10);
+						txtarea.setMargin(insets);
+						txtarea.setSelectedTextColor(Color.yellow);
+						txtarea.setSelectionColor(Color.cyan);
+						//txtarea.setRows(114);
+						//txtarea.setColumns(14);
+						//txtarea.setEditable(false);
+						txtarea.setLineWrap(true);
+						txtarea.setWrapStyleWord(true);
+						System.out.println("the number of rows: " + txtarea.getRows());
+						System.out.println("the number of columns: " + txtarea.getColumns());
+						System.out.println("the number of margin: " + txtarea.getMargin());
+						System.out.println(insets.toString());
+					}						
+					//txtarea.setEditable(true);
+					in.close();
+					} catch(MalformedURLException e4) {
+					} catch(IOException e ) { }
+				}
+			});
+			menu.add(menuItem);
+
+			menu = new JMenu("Color");
+			menuBar.add(menu);
+			menuItem = new JMenuItem("Color Chooser");
+			menuItem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					JColorChooser colorChooser = new JColorChooser();
+					colorChooser.showDialog(panel, "Chooser a favor color", Color.yellow);
+					Color selectedcolor = colorChooser.getColor();
+					System.out.println(selectedcolor.toString());
+					myFirstUI.setBackground(selectedcolor);
+				}
+			});
+			menu.add(menuItem);
+
+			menu = new JMenu("Help");
+			menuBar.add(menu);
+
+			menuItem = new JMenuItem("Contents");
+			menuItem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e3) {
+					desktop = Desktop.getDesktop();
+					//System.out.println(desktop.isDesktopSupported());
+					//System.out.println(desktop.isSupported(Desktop.Action.BROWSE));
+					//System.out.println(desktop.isSupported(Desktop.Action.EDIT));
+					//System.out.println(desktop.isSupported(Desktop.Action.MAIL));
+					//System.out.println(desktop.isSupported(Desktop.Action.OPEN));
+					//System.out.println(desktop.isSupported(Desktop.Action.PRINT));
+					//System.out.println(MouseInfo.getNumberOfButtons());
+					//System.out.println(MouseInfo.getPointerInfo().getLocation().getX()); 						
+					//System.out.println(MouseInfo.getPointerInfo().getLocation().getY());
+					try {
+						//desktop.browse(new URL("http://docs.oracle.com/javase/tutorial/").toURI());
+						File androidtutorial = new File("/home/javatar/development/adt-bundle-linux-x86_64-20131030/sdk/docs/robots.txt");
+						desktop.open(androidtutorial);
+						//desktop.mail();
+					} catch(MalformedURLException e4) {
+					//} catch(URISyntaxException e5) {
+					} catch(IOException e6) { }
+				}
+			});
+					
+			menu.add(menuItem);
+
+			menuItem = new JMenuItem("About");
+			menuItem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					//JPanel aboutPanel = new JPanel();
+					//aboutPanel.setLayout(aboutBox);
+					String selfintro = new String("gedit is a small and lightweight text editor for the GNOME Desktop");
+					ImageIcon imgicon = new ImageIcon("shiqiminus.jpg");
+
+
+					JOptionPane optionpane = new JOptionPane(selfintro, JOptionPane.INFORMATION_MESSAGE, JOptionPane.YES_NO_CANCEL_OPTION, imgicon);
+
+
+					JDialog dialog = optionpane.createDialog(panel, "how beatiful girl shiqi is ");
+					//CardLayout borderlayout = new CardLayout();
+					BoxLayout aboutBox = new BoxLayout(dialog, BoxLayout.Y_AXIS);
+					dialog.setLayout(aboutBox);
+					dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+					
+					//dialog.setLayout(borderlayout);
+					dialog.show();
+				}
+			});
+			menu.add(menuItem);
+
+
+			JButton openbutt = new JButton("open", new ImageIcon("/buttonicon/open.gif"));
+			JButton newbutt = new JButton("new", new ImageIcon("/buttonicon/new.gif"));
+			JButton savebutt = new JButton("save", new ImageIcon("/buttonicon/save.gif"));
+			JButton copybutt = new JButton("copy", new ImageIcon("/buttonicon/copy.gif"));
+			JButton pastebutt = new JButton("paste", new ImageIcon("/buttonicon/paste.gif"));
+			JButton cutbutt = new JButton("cut", new ImageIcon("/buttonicon/cut.gif"));
+			mytoolbar.addImpl(openbutt, null, 0);
+			mytoolbar.addImpl(newbutt, null, 1);
+			mytoolbar.addImpl(savebutt, null, 2);
+			mytoolbar.addImpl(toolbarseparator, null, 3);
+			mytoolbar.addImpl(copybutt, null, 4);
+			mytoolbar.addImpl(pastebutt, null, 5);
+			mytoolbar.addImpl(cutbutt, null, 6);
+
+
+
+			panel.add("Table", tablescrollpane);
+			//panel.add("Table", jtable);
+			jtable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+			jtable.setColumnSelectionAllowed(true);
+			jtable.setDragEnabled(true);
+			//jtable.setEditingColumns(10);
+			//jtable.setEditingRow(10);
+			jtable.setFillsViewportHeight(false);
+			jtable.setGridColor(Color.red);
+			//jtable.setIntercellSpacing(new Dimension(200, 200));
+			//jtable.setRowSelectionInterval(7, 15);
+			//jtable.setRowMargin(10);
+			//jtable.setSelectionBackground(Color.green);
+			jtable.setSelectionBackground(Color.cyan);
+			//jtable.setShowGrid(true);
+
+
+			panel.addTab("Unsaved Document 1", areasp);
+
+			myFirstUI.setJMenuBar(menuBar);
+			//myFirstUI.add(menuBar);
+			//myFirstUI.add(txtarea, BorderLayout.CENTER);
+			myFirstUI.addImpl(mytoolbar, borderlayout.NORTH, 8);
+			myFirstUI.add(statuslab);
+
+			statuslab.add(separator);
+
+			myFirstUI.setContentPane(panel);
+
+
+			UIManager uimanager = new UIManager();
+			//BasicLookAndFeel basic = new BasicLookAndFeel();
+			MultiLookAndFeel multi = new MultiLookAndFeel();
+			MetalLookAndFeel metal = new MetalLookAndFeel();
+			//metal.setCurrentTheme(javax.swing.plaf.metal.OceanTheme);
+			NimbusLookAndFeel nimbus = new NimbusLookAndFeel();
+			SynthLookAndFeel synth = new SynthLookAndFeel();
+			//uimanager.setLookAndFeel(com.sun.java.swing.plaf.gtk.GTKLookAndFeel);
+			uimanager.setLookAndFeel(metal);
+
+
+			/*UIManager.LookAndFeelInfo[] lookafeelinfo = uimanager.getInstalledLookAndFeels();
+			for(int h=0; h<lookafeelinfo.length; h++) {
+				System.out.println(lookafeelinfo[h].toString());
+			}
+
+			String lookandfeelstr = uimanager.getCrossPlatformLookAndFeelClassName();
+			System.out.println(lookandfeelstr);
+			String syslookandfeelstr = uimanager.getSystemLookAndFeelClassName();
+			System.out.println(syslookandfeelstr);
+
+			ComponentUI compui = uimanager.getUI(menuBar);
+			System.out.println(compui.getAccessibleChildrenCount(panel));
+			System.out.println(compui.getBaseline(menuBar, 100, 30));*/
+
+			} catch(ArrayIndexOutOfBoundsException e) { 
+			} catch(UnsupportedLookAndFeelException e9) { ;}
+		}
+
+		public void processWindowEvent(WindowEvent e) {
+			if(e.getID() == WindowEvent.WINDOW_CLOSING) {
+				System.exit(0);
+			}
+		}
+
+		/*public void processMouseEvent(MouseEvent e) {
+			if(e.getID() == MouseEvent.MOUSE_CLICKED) {
+				JFileChooser filechooser = new JFileChooser();
+				filechooser.showOpenDialog(myFirstUI);
+			}
+		}*/
+}
+
+
+
+class MyJToolBar extends JToolBar {
+
+
+		public MyJToolBar() {
+			super();
+		}
+
+		@Override
+		public void addImpl(Component comp, Object constraints, int index) {
+			super.addImpl(comp, constraints, index);
+		}
+}
